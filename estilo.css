@@ -1,0 +1,166 @@
+/* Estilo geral do corpo */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Estilo do cabeçalho */
+header {
+    background-color: #042450;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+header img {
+    height: 100px;
+    display: block;
+    margin: 0 auto;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo do conteúdo principal */
+main {
+    padding: 20px 40px; /* Espaço interno: 20px em cima/baixo, 40px nas laterais */
+    text-align: justify; /* Justifica o texto */
+    max-width: 1200px; /* Limita a largura do conteúdo */
+    margin: 0 auto; /* Centraliza o conteúdo */
+}
+
+section {
+    section.cinza {
+        background-color: #e0e0e0; /* Cinza claro */
+        color: #000000; /* Texto escuro para contraste */
+        padding: 40px 20px; /* Espaçamento interno */
+        text-align: justify; /* Centraliza o texto */
+    }
+    
+    /* Seção com fundo azul claro */
+    section.azul-claro {
+        background-color: #6c91b9; /* Azul claro */
+        color: #000000; 
+        padding: 40px 20px;
+        text-align: justify
+}
+}
+h1, h2, h3, h4 {
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Estilo dos produtos */
+.produto-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.produto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #fff;
+    width: calc(33.333% - 20px);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.produto img {
+    height: 200px;
+    object-fit: cover;
+    max-height: 200px;
+    border-radius: 4px;
+}
+
+.produto-info {
+    text-align: center;
+}
+
+.produto-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.produto-info ul li {
+    margin-bottom: 10px;
+}
+
+/* Estilo do formulário */
+form {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+form input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form input[type="submit"]:hover {
+    background-color: #555;
+}
+
+/* Estilo do rodapé */
+footer {
+    background-color: #042450;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    bottom: 0;
+}
