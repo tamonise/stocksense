@@ -3,21 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Empresa;
 
-class Produto extends Model {
-    protected $table = 'fornecedores';
+class Estoque extends Model {
+    protected $table = 'estoques';
 
     public $timestamps = true;
 
     protected $fillable = [
-        'nome', 'descricao', 'categoria', 'precoCompra', 'precoVenda'
+        'nome', 'idEmpresa'
     ];
 
-    public function aquisicoes() {
-        return $this->hasMany(Aquisicao::class, 'idProduto');
+    public function empresa() {
+        return $this->belongsTo(Empresa::class, 'idEmpresa');
     }
 
     public function itensCompra() {
         return $this->hasMany(ItemCompra::class);
     }
+
 }

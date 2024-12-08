@@ -32,13 +32,16 @@ require_once '../../constants.php';
                 <button class="tab-button" onclick="showTab('aquisicoes')">Aquisições</button>
                 <button class="tab-button" onclick="showTab('clientes')">Clientes</button>
                 <button class="tab-button" onclick="showTab('compras')">Compras</button>
-                <button class="tab-button" onclick="showTab('itensdacompra')">Itens da Compra</button>
+                <button class="tab-button" onclick="showTab('intensdacompra')">Itens da Compra</button>
                 <button class="tab-button" onclick="showTab('estoque')">Estoque</button>
                 <button class="tab-button" onclick="showTab('itensdoestoque')">Itens do Estoque</button>
+                <button class="tab-button" onclick="showTab('empresas')">Empresas</button>
             </div>
 
             <div class="file-upload" style="text-align: center; margin-top: 20px;">
                 <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" onchange="handleFileUpload(event)">
+                <button class="tab-button" onclick="clickEnviarBanco()">Enviar para banco</button>
+                <button class="tab-button" onclick="">Gerar previsão</button>
             </div>
 
             <div id="produtos" class="tab-content">
@@ -66,7 +69,7 @@ require_once '../../constants.php';
                 <p>Conteúdo sobre compras.</p>
             </div>
 
-            <div id="itensdacompra" class="tab-content">
+            <div id="intensdacompra" class="tab-content">
                 <h2>Itens da Compra</h2>
               <p>Conteúdo sobre itens da compra.</p>
             </div>
@@ -80,11 +83,29 @@ require_once '../../constants.php';
                 <h2>Itens do Estoque</h2>
                  <p>Conteúdo sobre itens do estoque.</p>
             </div>
+            
+            <div id="empresas" class="tab-content">
+                <h2>Empresas</h2>
+                 <p>Conteúdo sobre empresas.</p>
+            </div>
     </main>
 
     <?php include 'footer.php'; ?>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+    let jsonPlanilha = {
+        produtos: [],
+        fornecedores: [],
+        aquisicoes: [],
+        clientes: [],
+        compras: [],
+        itensCompra: [],
+        estoque: [],
+        itensEstoque: [],
+        empresas: []
+    };
+    let jsonPopulado = false;
+    let totalNaoDefinido = 0;
     function normalizeName(name) {
         return name
             .normalize("NFD")
@@ -92,6 +113,20 @@ require_once '../../constants.php';
             .replace(/\s+/g, "")
             .replace(/[^\w]/g, "")
             .toLowerCase();
+    }
+
+    function clickEnviarBanco() {
+        if(totalNaoDefinido > 0 || !jsonPopulado) {
+            alert("Resolva todas as inconsistências do arquivo antes de enviar!");
+        } else {
+            axios.post('<?php echo URL_BASE; ?>planilha/salvar', jsonPlanilha)
+            .then(response => {
+                console.log('Resposta do servidor:', response.data);
+            })
+            .catch(error => {
+                console.error('Erro ao enviar os dados:', error);
+            });
+        }
     }
 
     function showTab(tabName) {
@@ -109,9 +144,10 @@ require_once '../../constants.php';
     showTab('produtos');
 
     function handleFileUpload(event) {
+        
         const file = event.target.files[0];
         const reader = new FileReader();
-
+        
         reader.onload = function(e) {
             const data = e.target.result;
             const workbook = XLSX.read(data, { type: 'binary' });
@@ -121,18 +157,109 @@ require_once '../../constants.php';
                 const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
                 let tableHTML = '<table border="1" style="width: 100%; margin-top: 10px;">';
-                rows.forEach(cel => {
+                
+                for (let index = 0; index < rows.length; index++) {
+                    if(index > 0) {
+                        switch (normalizeName(sheetName)) {
+                            case 'produtos':
+                                let produto = {};
+                                produto.id = rows[index][0];
+                                produto.nome = rows[index][1];
+                                produto.descricao = rows[index][2];
+                                produto.categoria = rows[index][3];
+                                produto.precoCompra = rows[index][4];
+                                produto.precoVenda = rows[index][5];
+                                jsonPlanilha.produtos.push(produto);
+                                break;
+                            case 'fornecedores':
+                                let fornecedores = {}
+                                fornecedores.id = rows[index][0];
+                                fornecedores.nome = rows[index][1];
+                                fornecedores.cnpj = rows[index][2];
+                                fornecedores.endereco = rows[index][3];
+                                fornecedores.telefone = rows[index][4];
+                                fornecedores.email = rows[index][5];
+                                fornecedores.contato = rows[index][6];
+                                fornecedores.prazoEntrega = rows[index][7];
+                                jsonPlanilha.fornecedores.push(fornecedores);
+                                break;
+                            case 'aquisicoes':
+                                let aquisicoes = {}
+                                aquisicoes.id = rows[index][0];
+                                aquisicoes.dataCompra = rows[index][1];
+                                aquisicoes.quantidade = rows[index][2];
+                                aquisicoes.total = rows[index][3];
+                                aquisicoes.dataRecebimento = rows[index][4];
+                                aquisicoes.idFornecedor = rows[index][5];
+                                aquisicoes.idProduto = rows[index][6];
+                                jsonPlanilha.aquisicoes.push(aquisicoes);
+                                break;
+                            case 'clientes':
+                                let clientes = {};
+                                clientes.id = rows[index][0];
+                                clientes.nome = rows[index][1];
+                                clientes.cpf = rows[index][2];
+                                clientes.endereco = rows[index][3];
+                                clientes.telefone = rows[index][4];
+                                clientes.email = rows[index][5];
+                                clientes.idEmpresa = rows[index][6];
+                                jsonPlanilha.clientes.push(clientes);
+                                break;
+                            case 'compras':
+                                let compras = {};
+                                compras.id = rows[index][0];
+                                compras.data = rows[index][1];
+                                compras.formaPagamento = rows[index][2];
+                                compras.quantidade = rows[index][3];
+                                compras.total = rows[index][4];
+                                compras.idCliente = rows[index][5];
+                                compras.status = rows[index][6];
+                                jsonPlanilha.compras.push(compras);
+                                break;
+                            case 'intensdacompra':
+                                jsonPlanilha.itensCompra.id = rows[index][0];
+                                jsonPlanilha.itensCompra.idEstoque = rows[index][1];
+                                jsonPlanilha.itensCompra.idProduto = rows[index][2];
+                                jsonPlanilha.itensCompra.quantidade = rows[index][3];
+                                break;
+                            case 'estoque':
+                                jsonPlanilha.estoque.id = rows[index][0];
+                                jsonPlanilha.estoque.nome = rows[index][1];
+                                jsonPlanilha.estoque.idEmpresa = rows[index][2];
+                                break;
+                            case 'itensdoestoque':
+                                let itensCompra = {};
+                                itensCompra.id = rows[index][0];
+                                itensCompra.idProduto = rows[index][1];
+                                itensCompra.quantidadeAtual = rows[index][2];
+                                itensCompra.quantidadeMKinima = rows[index][3];
+                                jsonPlanilha.itensEstoque.push(itensCompra);
+                                break;
+                            case 'empresas':
+                                let itensEmpresa = {};
+                                itensEmpresa.id = rows[index][0];
+                                itensEmpresa.nome = rows[index][1];
+                                itensEmpresa.cnpj = rows[index][2];
+                                jsonPlanilha.empresas.push(itensEmpresa);
+                                break;
+                        
+                            default:
+                                break;
+                        }
+                    }
                     tableHTML += '<tr>';
-                    for (let index = 0; index < cel.length; index++) {
-                        if(cel[index] != undefined) {
-                            tableHTML += `<td>${cel[index]}</td>`;
+                    for (let indexCel = 0; indexCel < rows[index].length; indexCel++) {
+                        if(rows[index][indexCel] != undefined) {
+                            tableHTML += `<td>${rows[index][indexCel]}</td>`;
                         } else {
+                            totalNaoDefinido++;
                             tableHTML += `<td style="background-color: red;color: yellow;">NÂO DEFINIDO</td>`;
                         }
                         
                     }
                     tableHTML += '</tr>';
-                });
+                    
+                }
                 tableHTML += '</table>';
 
                 const normalizedTabId = normalizeName(sheetName);
@@ -140,6 +267,7 @@ require_once '../../constants.php';
 
                 if (tabElement) {
                     tabElement.innerHTML = tableHTML;
+                    jsonPopulado = true;
                 } else {
                     console.log(`Aba não encontrada no HTML: ${sheetName}`);
                 }
