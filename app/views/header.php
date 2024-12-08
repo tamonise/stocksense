@@ -1,5 +1,5 @@
 <header>
-        <img src="logopng.png" alt="StockSense" height="100px">
+        <img src="../../img/logopng.png" alt="StockSense" height="100px">
         <nav>
             <ul>
                 <li><a href="index.php">Página Inicial</a></li>

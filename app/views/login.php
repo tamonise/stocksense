@@ -1,20 +1,32 @@
-<!DOCTYPE html>
+<?php
+require_once '../../constants.php';
+?>
+
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <title>StockSense - Login</title>
-    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="../../css/estilo.css">
 </head>
 <body>
-<?php include "header.php"; ?>
-
-    <!-- Conteúdo principal da página com a caixa de login -->
+    <?php include "header.php"; ?>
+    
     <main>
         <section class="login-container">
             <div class="login-box">
+                <?php 
+                    if (isset($_GET['erro'])) {
+                        $mensagem = $_GET['mensagem'];
+                        if(!$_GET['erro']) {
+                            echo "<p style='color: blue;text-align: center;'>$mensagem</p>";
+                        } else {
+                            echo "<p style='color: red;'>$mensagem</p>";
+                        }
+                    }
+                ?>
+                
                 <h2>Faça o seu Login</h2>
-                <!-- Formulário de login -->
-                <form onsubmit="return fazerLogin()">
+                <form action="<?php echo URL_BASE; ?>login/login" method="post">
                     <div class="input-group">
                         <label for="email">E-mail:</label>
                         <input type="email" id="email" name="email" required>
@@ -29,7 +41,7 @@
                 </form>
             </div>
         </section>
-         <!-- Informações adicionais de contato -->
+        
          <section class="container contact-info">
             <h2>Informações de Contato</h2>
             <p>Você também pode nos contatar diretamente através dos seguintes meios:</p>
@@ -45,20 +57,6 @@
             </div>
         </section>
     </main>
-
-    <!-- Rodapé da página -->
     <?php include 'footer.php'; ?>
-
-    <!-- Script JavaScript para redirecionar ao pressionar "Entrar" -->
-    <script>
-        function fazerLogin() {
-            // Aqui você pode adicionar validações adicionais, se necessário
-
-            // Redireciona para a página desejada
-            window.location.href = "dashboard.php";
-            // Retorna false para evitar o envio real do formulário
-            return false;
-        }
-    </script>
 </body>
 </html>

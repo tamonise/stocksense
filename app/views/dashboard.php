@@ -1,22 +1,31 @@
-<!DOCTYPE html>
+<?php
+require_once '../../constants.php';
+?>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard - StockSense</title>
-    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="../../css/estilo.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
 </head>
 
 <body>
-    <!-- Cabeçalho -->
     <header>
-        <img src="logopng.png" alt="StockSense">
+        <img src="../../img/logopng.png" alt="StockSense">
     </header>
 
-    <!-- Conteúdo principal da página -->
     <main>
         <div class="dashboard">
-            <!-- Abas de navegação -->
+            <?php 
+                if (isset($_GET['erro'])) {
+                    $mensagem = $_GET['mensagem'];
+                    if(!$_GET['erro']) {
+                        echo "<p style='color: blue;text-align: center;'>$mensagem</p>";
+                    } else {
+                        echo "<p style='color: red;'>$mensagem</p>";
+                    }
+                }
+            ?>
             <div class="tabs">
                 <button class="tab-button" onclick="showTab('produtos')">Produtos</button>
                 <button class="tab-button" onclick="showTab('fornecedores')">Fornecedores</button>
@@ -28,12 +37,10 @@
                 <button class="tab-button" onclick="showTab('itensdoestoque')">Itens do Estoque</button>
             </div>
 
-            <!-- Área de upload de planilha -->
             <div class="file-upload" style="text-align: center; margin-top: 20px;">
                 <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" onchange="handleFileUpload(event)">
             </div>
 
-            <!-- Conteúdo das abas -->
             <div id="produtos" class="tab-content">
                 <h2>Produtos</h2>
                 <p>Conteúdo sobre produtos.</p>
@@ -75,39 +82,32 @@
             </div>
     </main>
 
-    <!-- Rodapé -->
     <?php include 'footer.php'; ?>
 
     <script>
-    // Função para normalizar nomes (remover espaços, acentos e caracteres especiais)
     function normalizeName(name) {
         return name
-            .normalize("NFD") // Decompõe caracteres acentuados
-            .replace(/[\u0300-\u036f]/g, "") // Remove diacríticos (acentos)
-            .replace(/\s+/g, "") // Remove espaços
-            .replace(/[^\w]/g, "") // Remove caracteres especiais
-            .toLowerCase(); // Converte para minúsculas
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, "")
+            .replace(/[^\w]/g, "")
+            .toLowerCase();
     }
 
-    // Função para mostrar a aba correspondente
     function showTab(tabName) {
-        // Ocultar todas as abas
         let tabs = document.querySelectorAll('.tab-content');
         tabs.forEach(tab => {
             tab.style.display = 'none';
         });
 
-        // Mostrar a aba clicada
         let selectedTab = document.getElementById(tabName);
         if (selectedTab) {
             selectedTab.style.display = 'block';
         }
     }
 
-    // Mostrar a primeira aba por padrão
     showTab('produtos');
 
-    // Função para ler e distribuir os dados da planilha nas abas
     function handleFileUpload(event) {
         const file = event.target.files[0];
         const reader = new FileReader();
@@ -116,23 +116,25 @@
             const data = e.target.result;
             const workbook = XLSX.read(data, { type: 'binary' });
 
-            // Processar todas as planilhas
             workbook.SheetNames.forEach(sheetName => {
                 const worksheet = workbook.Sheets[sheetName];
                 const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-                // Gerar HTML da tabela
                 let tableHTML = '<table border="1" style="width: 100%; margin-top: 10px;">';
-                rows.forEach(row => {
+                rows.forEach(cel => {
                     tableHTML += '<tr>';
-                    row.forEach(cell => {
-                        tableHTML += `<td>${cell || ''}</td>`;
-                    });
+                    for (let index = 0; index < cel.length; index++) {
+                        if(cel[index] != undefined) {
+                            tableHTML += `<td>${cel[index]}</td>`;
+                        } else {
+                            tableHTML += `<td style="background-color: red;color: yellow;">NÂO DEFINIDO</td>`;
+                        }
+                        
+                    }
                     tableHTML += '</tr>';
                 });
                 tableHTML += '</table>';
 
-                // Normalizar o nome da aba e buscar o ID correspondente no HTML
                 const normalizedTabId = normalizeName(sheetName);
                 const tabElement = document.getElementById(normalizedTabId);
 
