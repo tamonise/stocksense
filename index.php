@@ -29,27 +29,29 @@ if(RUN_MIGRATIONS) {
     $createProdutosTable = new CreateProdutosTable();
     $createUsuariosTable = new createUsuariosTable();
 
-    $createEmpresasTable->down();
+    $createItensEstoque->down();
+    $createItensCompraTable->down();
+    $createAquisicoesTable->down();
+    $createComprasTable->down();
+    $createClientesTable->down();
+    $createEstoqueTable->down();
     $createProdutosTable->down();
     $createFornecedoresTable->down();
-    $createAquisicoesTable->down();
-    $createClientesTable->down();
-    $createComprasTable->down();
-    $createEstoqueTable->down();
-    $createItensCompraTable->down();
-    $createItensEstoque->down();
+    $createEmpresasTable->down();
     $createUsuariosTable->down();
+
     
-    $createEmpresasTable->up();
     $createProdutosTable->up();
     $createFornecedoresTable->up();
     $createAquisicoesTable->up();
+    $createEmpresasTable->up();
     $createClientesTable->up();
     $createComprasTable->up();
     $createEstoqueTable->up();
     $createItensCompraTable->up();
     $createItensEstoque->up();
     $createUsuariosTable->up();
+
 
 }
 

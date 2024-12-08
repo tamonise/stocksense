@@ -12,14 +12,14 @@ class Aquisicao extends Model {
     public $timestamps = true;
 
     protected $fillable = [
-        'dataCompra', 'quantidade', 'total', 'dataRecebimento', 'dataRecebimento', 'idFornecedor', 'idProduto'
+        'data_compra', 'quantidade', 'total', 'data_recebimento'
     ];
 
     public function fornecedor() {
-        return $this->belongsTo(Fornecedor::class, 'idFornecedor');
+        return $this->belongsTo(Fornecedor::class);
     }
 
     public function produto() {
-        return $this->belongsTo(Produto::class, 'idProduto');
+        return $this->belongsTo(Produto::class);
     }
 }

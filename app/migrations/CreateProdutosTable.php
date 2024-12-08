@@ -8,10 +8,10 @@ class CreateProdutosTable {
         Capsule::schema()->create('produtos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome', 255);
-            $table->string('descricao', 255);
-            $table->string('categoria', 255);
-            $table->double('precoCompra');
-            $table->double('precoVenda');
+            $table->text('descricao');
+            $table->string('categoria', 100);
+            $table->decimal('preco_compra', 10, 2);
+            $table->decimal('preco_venda', 10, 2);
             $table->timestamps();
         });
     }

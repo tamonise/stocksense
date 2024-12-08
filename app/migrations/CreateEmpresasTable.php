@@ -8,7 +8,7 @@ class CreateEmpresasTable {
         Capsule::schema()->create('empresas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome', 255);
-            $table->integer('cnpj');
+            $table->string('cnpj', 18)->unique();
             $table->timestamps();
         });
     }

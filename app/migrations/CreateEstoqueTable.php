@@ -8,9 +8,9 @@ class CreateEstoqueTable {
         Capsule::schema()->create('estoques', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome', 255);
-            $table->unsignedInteger('idEmpresa');
+            $table->unsignedInteger('empresa_id');
             $table->timestamps();
-            $table->foreign('idEmpresa')->references('id')->on('empresas')->onDelete('cascade');
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
         });
     }
 

@@ -22,4 +22,5 @@ class Empresa extends Model {
     public function estoques() {
         return $this->hasMany(Estoque::class);
     }
+    
 }

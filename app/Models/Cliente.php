@@ -11,11 +11,11 @@ class Cliente extends Model {
     public $timestamps = true;
 
     protected $fillable = [
-        'nome', 'cpf', 'endereco', 'telefone', 'email', 'idEmpresa'
+        'nome', 'cpf', 'endereco', 'telefone', 'email', 'empresa_id'
     ];
 
     public function empresa() {
-        return $this->belongsTo(Empresa::class, 'idEmpresa');
+        return $this->belongsTo(Empresa::class);
     }
 
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Empresa;
+use App\Models\ItemCompra;
 
 class Estoque extends Model {
     protected $table = 'estoques';
@@ -11,11 +12,11 @@ class Estoque extends Model {
     public $timestamps = true;
 
     protected $fillable = [
-        'nome', 'idEmpresa'
+        'nome', 'empresa_id'
     ];
 
     public function empresa() {
-        return $this->belongsTo(Empresa::class, 'idEmpresa');
+        return $this->belongsTo(Empresa::class);
     }
 
     public function itensCompra() {

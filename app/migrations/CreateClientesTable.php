@@ -8,13 +8,13 @@ class CreateClientesTable {
         Capsule::schema()->create('clientes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome', 255);
-            $table->integer('cpf');
+            $table->string('cpf', 20);
             $table->string('endereco', 255);
-            $table->integer('telefone');
+            $table->string('telefone', 20);
             $table->string('email', 255);
-            $table->unsignedInteger('idEmpresa');
+            $table->unsignedInteger('empresa_id');
             $table->timestamps();
-            $table->foreign('idEmpresa')->references('id')->on('empresas')->onDelete('cascade');
+            $table->foreign('empresa_id')->references('id')->on('empresas')->onDelete('cascade');
         });
     }
 

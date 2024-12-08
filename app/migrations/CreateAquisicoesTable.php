@@ -7,15 +7,15 @@ class CreateAquisicoesTable {
     public function up() {
         Capsule::schema()->create('aquisicoes', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('dataCompra');
+            $table->string('data_compra', 20);
             $table->integer('quantidade');
             $table->integer('total');
-            $table->date('dataRecebimento');
-            $table->unsignedInteger('idFornecedor');
-            $table->unsignedInteger('idProduto');
+            $table->string('data_recebimento', 20);
+            $table->unsignedInteger('fornecedor_id');
+            $table->unsignedInteger('produto_id');
             $table->timestamps();
-            $table->foreign('idFornecedor')->references('id')->on('fornecedores')->onDelete('cascade');
-            $table->foreign('idProduto')->references('id')->on('produtos')->onDelete('cascade');
+            $table->foreign('fornecedor_id')->references('id')->on('fornecedores')->onDelete('cascade');
+            $table->foreign('produto_id')->references('id')->on('produtos')->onDelete('cascade');
         });
     }
 

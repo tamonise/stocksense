@@ -11,11 +11,14 @@ class Compra extends Model {
     public $timestamps = true;
 
     protected $fillable = [
-        'data', 'formaPagamento', 'quantidade', 'total', 'idCliente', 'status'
+        'data', 'forma_pagamento', 'quantidade', 'total', 'status', 'cliente_id'
     ];
 
     public function cliente() {
-        return $this->belongsTo(Cliente::class, 'idCliente');
+        return $this->belongsTo(Cliente::class);
     }
 
+    public function itensCompra() {
+        return $this->hasMany(ItemCompra::class);
+    }
 }

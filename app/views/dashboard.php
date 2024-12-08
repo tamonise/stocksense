@@ -41,7 +41,7 @@ require_once '../../constants.php';
             <div class="file-upload" style="text-align: center; margin-top: 20px;">
                 <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" onchange="handleFileUpload(event)">
                 <button class="tab-button" onclick="clickEnviarBanco()">Enviar para banco</button>
-                <button class="tab-button" onclick="">Gerar previsão</button>
+                <button class="tab-button" onclick="clickGerarPrevisao()">Gerar previsão</button>
             </div>
 
             <div id="produtos" class="tab-content">
@@ -128,6 +128,16 @@ require_once '../../constants.php';
             });
         }
     }
+    
+    function clickGerarPrevisao() {
+        axios.post('<?php echo URL_BASE; ?>planilha/executarPython', {})
+        .then(response => {
+            console.log('Resposta do servidor:', response.data);
+        })
+        .catch(error => {
+            console.error('Erro ao enviar os dados:', error);
+        });
+    }
 
     function showTab(tabName) {
         let tabs = document.querySelectorAll('.tab-content');
@@ -190,8 +200,8 @@ require_once '../../constants.php';
                                 aquisicoes.quantidade = rows[index][2];
                                 aquisicoes.total = rows[index][3];
                                 aquisicoes.dataRecebimento = rows[index][4];
-                                aquisicoes.idFornecedor = rows[index][5];
-                                aquisicoes.idProduto = rows[index][6];
+                                aquisicoes.fornecedor_id = rows[index][5];
+                                aquisicoes.produto_id = rows[index][6];
                                 jsonPlanilha.aquisicoes.push(aquisicoes);
                                 break;
                             case 'clientes':
@@ -202,7 +212,7 @@ require_once '../../constants.php';
                                 clientes.endereco = rows[index][3];
                                 clientes.telefone = rows[index][4];
                                 clientes.email = rows[index][5];
-                                clientes.idEmpresa = rows[index][6];
+                                clientes.empresa_id = rows[index][6];
                                 jsonPlanilha.clientes.push(clientes);
                                 break;
                             case 'compras':
@@ -212,27 +222,31 @@ require_once '../../constants.php';
                                 compras.formaPagamento = rows[index][2];
                                 compras.quantidade = rows[index][3];
                                 compras.total = rows[index][4];
-                                compras.idCliente = rows[index][5];
+                                compras.cliente_id = rows[index][5];
                                 compras.status = rows[index][6];
                                 jsonPlanilha.compras.push(compras);
                                 break;
                             case 'intensdacompra':
-                                jsonPlanilha.itensCompra.id = rows[index][0];
-                                jsonPlanilha.itensCompra.idEstoque = rows[index][1];
-                                jsonPlanilha.itensCompra.idProduto = rows[index][2];
-                                jsonPlanilha.itensCompra.quantidade = rows[index][3];
+                                let intensdacompra = {};
+                                intensdacompra.compra_id = rows[index][0];
+                                intensdacompra.estoque_id = rows[index][1];
+                                intensdacompra.produto_id = rows[index][2];
+                                intensdacompra.quantidade = rows[index][3];
+                                jsonPlanilha.itensCompra.push(intensdacompra);
                                 break;
                             case 'estoque':
-                                jsonPlanilha.estoque.id = rows[index][0];
-                                jsonPlanilha.estoque.nome = rows[index][1];
-                                jsonPlanilha.estoque.idEmpresa = rows[index][2];
+                                let estoque = {};
+                                estoque.id = rows[index][0];
+                                estoque.nome = rows[index][1];
+                                estoque.empresa_id = rows[index][2];
+                                jsonPlanilha.estoque.push(estoque);
                                 break;
                             case 'itensdoestoque':
                                 let itensCompra = {};
-                                itensCompra.id = rows[index][0];
-                                itensCompra.idProduto = rows[index][1];
+                                itensCompra.estoque_id = rows[index][0];
+                                itensCompra.produto_id = rows[index][1];
                                 itensCompra.quantidadeAtual = rows[index][2];
-                                itensCompra.quantidadeMKinima = rows[index][3];
+                                itensCompra.quantidadeMinima = rows[index][3];
                                 jsonPlanilha.itensEstoque.push(itensCompra);
                                 break;
                             case 'empresas':
@@ -242,7 +256,6 @@ require_once '../../constants.php';
                                 itensEmpresa.cnpj = rows[index][2];
                                 jsonPlanilha.empresas.push(itensEmpresa);
                                 break;
-                        
                             default:
                                 break;
                         }

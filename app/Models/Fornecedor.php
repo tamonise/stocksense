@@ -10,10 +10,10 @@ class Fornecedor extends Model {
     public $timestamps = true;
 
     protected $fillable = [
-        'nome', 'cnpj', 'endereco', 'telefone', 'contato', 'prazoEntrega'
+        'nome', 'cnpj', 'endereco', 'telefone', 'contato', 'prazo_entrega'
     ];
 
     public function aquisicoes() {
-        return $this->hasMany(Aquisicao::class, 'idFornecedor');
+        return $this->hasMany(Aquisicao::class);
     }
 }

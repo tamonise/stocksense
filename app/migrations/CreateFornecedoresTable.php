@@ -8,12 +8,12 @@ class CreateFornecedoresTable {
         Capsule::schema()->create('fornecedores', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome', 255);
-            $table->integer('cnpj');
+            $table->string('cnpj', 18)->unique();
             $table->string('endereco', 255);
-            $table->string('telefone', 255);
+            $table->string('telefone', 20);
             $table->string('email', 255);
             $table->string('contato', 255);
-            $table->date('prazoEntrega');
+            $table->string('prazo_entrega', 50);
             $table->timestamps();
         });
     }
