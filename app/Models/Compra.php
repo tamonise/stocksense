@@ -11,7 +11,7 @@ class Compra extends Model {
     public $timestamps = true;
 
     protected $fillable = [
-        'data', 'forma_pagamento', 'quantidade', 'total', 'status', 'cliente_id'
+        'data', 'forma_pagamento', 'total', 'status', 'cliente_id'
     ];
 
     public function cliente() {

@@ -7,10 +7,10 @@ class CreateAquisicoesTable {
     public function up() {
         Capsule::schema()->create('aquisicoes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('data_compra', 20);
+            $table->date('data_compra');
             $table->integer('quantidade');
-            $table->integer('total');
-            $table->string('data_recebimento', 20);
+            $table->double('total');
+            $table->date('data_recebimento');
             $table->unsignedInteger('fornecedor_id');
             $table->unsignedInteger('produto_id');
             $table->timestamps();

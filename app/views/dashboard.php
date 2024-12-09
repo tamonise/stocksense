@@ -121,7 +121,15 @@ require_once '../../constants.php';
         } else {
             axios.post('<?php echo URL_BASE; ?>planilha/salvar', jsonPlanilha)
             .then(response => {
-                console.log('Resposta do servidor:', response.data);
+                if(response.data.erro) {
+                    let mensagem = "";
+                    response.data.mensagens.forEach(element => {
+                        mensagem = mensagem + element + '\n';
+                    });
+                    alert(mensagem);
+                } else {
+                    alert("Dados cadastrados com sucesso!");
+                }
             })
             .catch(error => {
                 console.error('Erro ao enviar os dados:', error);
@@ -132,7 +140,9 @@ require_once '../../constants.php';
     function clickGerarPrevisao() {
         axios.post('<?php echo URL_BASE; ?>planilha/executarPython', {})
         .then(response => {
-            console.log('Resposta do servidor:', response.data);
+            if(response.data.erro) {
+                alert(response.data.mensagem);
+            }
         })
         .catch(error => {
             console.error('Erro ao enviar os dados:', error);
@@ -220,10 +230,9 @@ require_once '../../constants.php';
                                 compras.id = rows[index][0];
                                 compras.data = rows[index][1];
                                 compras.formaPagamento = rows[index][2];
-                                compras.quantidade = rows[index][3];
-                                compras.total = rows[index][4];
-                                compras.cliente_id = rows[index][5];
-                                compras.status = rows[index][6];
+                                compras.total = rows[index][3];
+                                compras.cliente_id = rows[index][4];
+                                compras.status = rows[index][5];
                                 jsonPlanilha.compras.push(compras);
                                 break;
                             case 'intensdacompra':
