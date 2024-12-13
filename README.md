@@ -83,6 +83,25 @@ O sistema foi desenvolvido utilizando tecnologias web e segue os princípios de 
 
 
 ## **Estrutura do Projeto**
+O StockSense é um sistema web que integra tecnologias modernas para oferecer um ambiente de predição de estoque e facilidade na visualização dos itens em estoque. A estrutura do projeto é composta por três camadas principais: backend, frontend e banco de dados, proporcionando escalabilidade e funcionalidade.
+
+**1. Backend (Lógica de Predição e Banco de Dados)**
+A camada de lógica e predição é desenvolvida em Python, utilizando bibliotecas e frameworks voltados para machine learning e análise de dados. Essa camada é responsável por processar os dados armazenados e gerar as previsões.
+Além disso, o sistema conta com o suporte do Spring Boot, que gerencia o servidor do lado backend, incluindo a API que conecta o sistema às demais camadas.
+
+
+**2. Frontend (Interface do Usuário)**
+A interface web é desenvolvida com um conjunto de tecnologias que oferece uma experiência de usuário responsiva e dinâmica:
+    - HTML, CSS e JavaScript: Estruturam, estilizam e tornam a página interativa.
+    - PHP: Utilizado para realizar interações com o backend e renderizar conteúdo dinâmico na página.
+
+**3. Banco de Dados**
+O projeto utiliza MySQL como sistema gerenciador de banco de dados, permitindo o armazenamento estruturado e eficiente das informações necessárias para as operações de predição e gestão de estoque. O servidor é configurado com a ajuda do XAMPP, que facilita o desenvolvimento e teste em ambiente local.
+
+**4. Integração Geral**
+A integração entre as diferentes camadas do sistema é feita de forma modular, garantindo que o backend forneça dados preditivos ao frontend, enquanto o banco de dados armazena todas as informações críticas de forma segura e acessível. O uso do XAMPP simplifica a configuração e o gerenciamento do ambiente de desenvolvimento, enquanto tecnologias robustas como Spring Boot e Python garantem a escalabilidade e precisão nas previsões.
+
+O StockSense se destaca pela combinação de tecnologias versáteis e confiáveis, criando uma solução eficiente para o gerenciamento preditivo de estoques.
 
 
 
@@ -94,7 +113,7 @@ Como este é um projeto acadêmico, contribuições externas estão restritas. N
 
 ## **Autores**
 
-Este projeto foi desenvolvido por Alana Silva Barbosa, Tamoni Monise Ferreira da Silva, Mateus Boletta Gonçalves  e Stella Maris Gonçalves do Bem como parte das atividades do curso de Ciência da Computação na **PUC Minas - Poços de Caldas**.
+Este projeto foi desenvolvido por Alana Silva Barbosa, Tamoni Monise Ferreira da Silva e Stella Maris Gonçalves do Bem como parte das atividades do curso de Ciência da Computação na **PUC Minas - Poços de Caldas**.
 
 ---
 
