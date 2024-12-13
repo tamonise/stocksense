@@ -47,21 +47,40 @@ O sistema foi desenvolvido utilizando tecnologias web e segue os princípios de 
    git clone https://github.com/tamonise/stocksense.git
    ```
 
-2. Certifique-se de que você possui o **XAMPP** ou outro servidor local instalado.
+2. Certifique-se de que você possui o **XAMPP** incluindo o **Apache** e **MySQL**
+   
+3. Certifique-se também de ter o **Workbench MySQL**
+   
+4. Acesse o localhost com seu usuário e senha (definidos no MySQL padrão:usuário:"root" senha:"")
+   
+5. No seu navegador acesse o localhost\login com seu usuário e senha
+   
+6. Crie um schema no Workbanch nomeado "stocksense"
 
-3. Coloque os arquivos do projeto na pasta **htdocs** do XAMPP:
+7. Acesse C:/xampp/htdocs remova todos arquivos da pasta, EXCETO a pasta xampp
+
+8. Coloque os arquivos do projeto na pasta **htdocs** do XAMPP:
    ```bash
    C:\xampp\htdocs\stocksense
    ```
+9.Instale o composer https://getcomposer.org/download/
 
-4. Inicie o servidor local no XAMPP.
+10. Inicie o servidor local no XAMPP.
+    
+11. Abra o terminar na raiz do projeto C:/xampp/htdocs e execute os seguintes comandos:
+	- composer install
+	- composer dump-autoload
 
-5. Abra o navegador e acesse:
-   ```
-   http://localhost/stocksense
-   ```
+12.Abra o projeto, no arquivo config/database.php altere o usuário e senha para o seu usuário e senha
 
----
+13.Abra o arquivo de constants.php e altere a constante RUN_MIGRATIONS para true
+
+14. Pelo navegador, acesse localhost/login
+
+15.O acesso dessa rota constrói as tabelas no banco, abra o Workbanch e verifique se as tabelas foram criadas
+
+16.No último passo, retorne no arquivo constants.php e altere a constante RUN_MIGRATIONS para false, para impedir que a rota programada limpe o banco
+
 
 ## **Estrutura do Projeto**
 
