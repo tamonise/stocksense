@@ -12,6 +12,7 @@ O sistema foi desenvolvido utilizando tecnologias web e segue os princípios de 
 
 ---
 
+
 ## **Funcionalidades**
 
 - **Dashboard interativo**: Visualização organizada e navegação por abas para os principais módulos:
@@ -24,6 +25,10 @@ O sistema foi desenvolvido utilizando tecnologias web e segue os princípios de 
   - Estoque
   - Itens do Estoque
 
+- **Previsão de vendas e estoque**: Utilização de algoritmos de regressão linear para análise de dados históricos e projeção futura de vendas e níveis de estoque.
+
+- **Visualização gráfica**: Gráficos interativos gerados para melhor compreensão das tendências de vendas e estoque ao longo do tempo.
+
 - **Importação de planilhas**: Possibilidade de carregar dados diretamente de arquivos no formato `.xlsx`, distribuindo automaticamente as informações para as abas correspondentes.
 
 - **Controle centralizado**: Gerenciamento simplificado das operações relacionadas ao estoque e fornecedores.
@@ -32,11 +37,15 @@ O sistema foi desenvolvido utilizando tecnologias web e segue os princípios de 
 
 ## **Tecnologias Utilizadas**
 
+- **Backend**: PHP com Laravel (Illuminate/Database).
 - **Frontend**: HTML, CSS e JavaScript.
-- **Bibliotecas**: 
-  - [XLSX.js](https://github.com/SheetJS/sheetjs) para leitura e processamento de planilhas.
-- **Servidor local**: [XAMPP](https://www.apachefriends.org/).
+- **Bibliotecas**:
+  - [XLSX.js](https://github.com/SheetJS/sheetjs) para leitura de planilhas.
+  - [Matplotlib](https://matplotlib.org/) e [Scikit-learn](https://scikit-learn.org/) para análise de dados.
+  - [Pandas](https://pandas.pydata.org/) para manipulação e análise de dados em formato tabular.
+- **Servidor local**: XAMPP (Apache e MySQL).
 - **Controle de versão**: Git e GitHub.
+- **Outras ferramentas**: Composer para gestão de dependências.
 
 ---
 
